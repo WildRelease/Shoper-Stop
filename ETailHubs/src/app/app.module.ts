@@ -9,9 +9,11 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { MaterialModule } from 'src/material_modules';
+import { SignUpComponent } from './sign-up/sign-up.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
