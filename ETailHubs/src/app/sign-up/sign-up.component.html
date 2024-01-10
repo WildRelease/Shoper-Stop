@@ -3,16 +3,26 @@
     <div class="FormCard">
       <div class="close"></div>
       <div class="hedding">sign up</div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Full Name</mat-label>
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <input matInput type="text" formControlName="fullName" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <input matInput type="number" formControlName="phoneNo" required>
+        <mat-error>Please enter valid number</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <input matInput placeholder="Placeholder" formControlName="email" required>
+        <mat-error>Please enter valid Email</mat-error>
+      </mat-form-field>
+      <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+    </form>
     </div>
   </div>
   <div class="welcome"><img src="../../assets/Images/Welcome.jpeg" /></div>
