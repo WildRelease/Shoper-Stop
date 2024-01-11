@@ -3,23 +3,47 @@
     <div class="FormCard">
       <div class="close"></div>
       <div class="hedding">sign up</div>
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="FormField">
       <mat-form-field appearance="outline">
         <mat-label>Full Name</mat-label>
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-icon matSuffix>perm_identity</mat-icon>
         <input matInput type="text" formControlName="fullName" required>
+        <mat-error>Please enter fullName</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Phone Number</mat-label>
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <input matInput type="number" formControlName="phoneNo" required>
-        <mat-error>Please enter valid number</mat-error>
+        <input matInput type="text" formControlName="phoneNo" maxlength="10" required>
+        <mat-icon matSuffix>local_phone</mat-icon>
+        <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('required')">
+          Phone number is required
+        </mat-error>
+        <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('maxlength')">
+          Phone number cannot exceed 10 characters
+        </mat-error>
+        <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('pattern')">
+          Please enter a valid phone number
+        </mat-error>
       </mat-form-field>
+      
       <mat-form-field appearance="outline">
         <mat-label>Email Address</mat-label>
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        <input matInput placeholder="Placeholder" formControlName="email" required>
+        <mat-icon matSuffix>mail_outline</mat-icon>
+        <input matInput formControlName="email" required>
         <mat-error>Please enter valid Email</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <mat-icon matSuffix *ngIf="!showPassword" (click)="tooglepassowrdvisiility()">visibility_off</mat-icon>
+        <mat-icon matSuffix *ngIf="showPassword" (click)="tooglepassowrdvisiility()">visibility</mat-icon>
+        <input matInput type="{{ showPassword ? 'text' : 'password' }}"  formControlName="password" required>
+        <mat-error>Please enter 6 digit password</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <mat-icon matSuffix *ngIf="!showPassword" (click)="tooglepassowrdvisiility()">visibility_off</mat-icon>
+        <mat-icon matSuffix *ngIf="showPassword" (click)="tooglepassowrdvisiility()">visibility</mat-icon>
+        <input type="{{ showPassword ? 'text' : 'password' }}" matInput formControlName="confirmPassword" required>
+        <mat-error>Enter Correct password</mat-error>
       </mat-form-field>
       <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
     </form>
