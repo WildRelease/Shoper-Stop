@@ -1,53 +1,111 @@
 <div class="signUpPage">
   <div class="FormPage">
-    <div class="FormCard">
-      <div class="close"></div>
-      <div class="hedding">sign up</div>
+    <mat-card class="FormCard">
+      <div class="close"><mat-icon>close</mat-icon></div>
+      <div class="heading">sign up</div>
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="FormField">
-      <mat-form-field appearance="outline">
-        <mat-label>Full Name</mat-label>
-        <mat-icon matSuffix>perm_identity</mat-icon>
-        <input matInput type="text" formControlName="fullName" required>
-        <mat-error>Please enter fullName</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Phone Number</mat-label>
-        <input matInput type="text" formControlName="phoneNo" maxlength="10" required>
-        <mat-icon matSuffix>local_phone</mat-icon>
-        <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('required')">
-          Phone number is required
-        </mat-error>
-        <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('maxlength')">
-          Phone number cannot exceed 10 characters
-        </mat-error>
-        <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('pattern')">
-          Please enter a valid phone number
-        </mat-error>
-      </mat-form-field>
-      
-      <mat-form-field appearance="outline">
-        <mat-label>Email Address</mat-label>
-        <mat-icon matSuffix>mail_outline</mat-icon>
-        <input matInput formControlName="email" required>
-        <mat-error>Please enter valid Email</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <mat-icon matSuffix *ngIf="!showPassword" (click)="tooglepassowrdvisiility()">visibility_off</mat-icon>
-        <mat-icon matSuffix *ngIf="showPassword" (click)="tooglepassowrdvisiility()">visibility</mat-icon>
-        <input matInput type="{{ showPassword ? 'text' : 'password' }}"  formControlName="password" required>
-        <mat-error>Please enter 6 digit password</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Confirm Password</mat-label>
-        <mat-icon matSuffix *ngIf="!showPassword" (click)="tooglepassowrdvisiility()">visibility_off</mat-icon>
-        <mat-icon matSuffix *ngIf="showPassword" (click)="tooglepassowrdvisiility()">visibility</mat-icon>
-        <input type="{{ showPassword ? 'text' : 'password' }}" matInput formControlName="confirmPassword" required>
-        <mat-error>Enter Correct password</mat-error>
-      </mat-form-field>
-      <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
-    </form>
-    </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <mat-icon matSuffix>perm_identity</mat-icon>
+          <input matInput type="text" formControlName="fullName" required />
+          <mat-error>Please enter fullName</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="phoneNo"
+            maxlength="10"
+            required
+          />
+          <mat-icon matSuffix>local_phone</mat-icon>
+          <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('required')">
+            Phone number is required
+          </mat-error>
+          <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('maxlength')">
+            Phone number cannot exceed 10 characters
+          </mat-error>
+          <mat-error *ngIf="signupForm.get('phoneNo')?.hasError('pattern')">
+            Please enter a valid phone number
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+          <mat-icon matSuffix>mail_outline</mat-icon>
+          <input matInput formControlName="email" required />
+          <mat-error>Please enter valid Email</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <mat-icon
+            matSuffix
+            *ngIf="!showPassword"
+            (click)="tooglepassowrdvisiility()"
+            >visibility_off</mat-icon
+          >
+          <mat-icon
+            matSuffix
+            *ngIf="showPassword"
+            (click)="tooglepassowrdvisiility()"
+            >visibility</mat-icon
+          >
+          <input
+            matInput
+            type="{{ showPassword ? 'text' : 'password' }}"
+            formControlName="password"
+            required
+          />
+          <mat-error>Please enter 6 digit password</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <mat-icon
+            matSuffix
+            *ngIf="!showconfirmPassword"
+            (click)="tooglepassowrdvisiility1()"
+            >visibility_off</mat-icon
+          >
+          <mat-icon
+            matSuffix
+            *ngIf="showconfirmPassword"
+            (click)="tooglepassowrdvisiility1()"
+            >visibility</mat-icon
+          >
+          <input
+            type="{{ showconfirmPassword ? 'text' : 'password' }}"
+            matInput
+            formControlName="confirmPassword"
+            required
+          />
+          <!-- <mat-error>Enter Correct password</mat-error> -->
+          <!-- <mat-error *ngIf="signupForm?.errors?.['match_error']">enter correct password</mat-error>
+          <mat-error *ngIf="signupForm?.get('confirmPassword')?.hasError('required')">required</mat-error> -->
+          <mat-error *ngIf="signupForm?.get('confirmPassword')?.hasError('match_error')"
+            >Enter correct password</mat-error
+          >
+          <mat-error *ngIf="signupForm?.get('confirmPassword')?.hasError('required')"
+            >Required</mat-error
+          >
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="signupForm.invalid"
+        >
+          Sign Up
+        </button>
+      </form>
+      <p class="orWord">- OR -</p>
+      <div class="LoginOptions">
+        <div class="icons"><img src="../../assets/Images/google_300221.png"></div>
+        <div class="icons"><img src="../../assets/Images/apple-logo_747.png"></div>
+        <div class="icons"><img src="../../assets/Images/facebook_3128304.png"></div>
+      </div>
+      <div class="signin">Already have Account? <p> Sign in</p></div>
+    </mat-card>
   </div>
   <div class="welcome"><img src="../../assets/Images/Welcome.jpeg" /></div>
 </div>
