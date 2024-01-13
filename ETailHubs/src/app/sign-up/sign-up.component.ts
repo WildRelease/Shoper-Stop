@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,6 +9,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 export class SignUpComponent implements OnInit {
 
   showPassword: boolean = false;
+  showconfirmPassword: boolean = false;
   signupForm!: FormGroup;
   fb: FormBuilder = new FormBuilder;
 
@@ -18,9 +19,26 @@ export class SignUpComponent implements OnInit {
       phoneNo: new FormControl("", [Validators.minLength(10), Validators.maxLength(10)]),
       email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", [Validators.required, Validators.minLength(6)]),
-      confirmPassword: new FormControl("")
-    }, { validators: this.passwordMatch.bind(this) });
+      confirmPassword: new FormControl("",Validators.required)
+    },);
+    this.validate();
   }
+  public validate() {
+    const confirmPasswordControl = this.signupForm.get('confirmPassword');
+    if (confirmPasswordControl) {
+      confirmPasswordControl.setValidators(this.validates(this.signupForm.get('password'), confirmPasswordControl));
+      confirmPasswordControl.updateValueAndValidity();
+    }
+  }
+   validates(control:AbstractControl| null,
+    controlTwo: AbstractControl | null):ValidatorFn{
+      return()=>{
+        if(control?.value!=controlTwo?.value) return{match_error:true};
+        return null;
+      }
+    } 
+    
+    
   
   private passwordMatch(control: AbstractControl) {
     const password = control.get("password")?.value;
@@ -30,6 +48,9 @@ export class SignUpComponent implements OnInit {
   tooglepassowrdvisiility(){
     this.showPassword = !this.showPassword;
   }
+  tooglepassowrdvisiility1(){
+    this.showconfirmPassword = !this.showconfirmPassword;
+  }
   onSubmit() {
     if (this.signupForm.valid) {
       
@@ -37,5 +58,6 @@ export class SignUpComponent implements OnInit {
     }
     console.log(this.signupForm.value);
   }
+
   
 }
